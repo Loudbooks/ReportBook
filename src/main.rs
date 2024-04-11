@@ -8,7 +8,7 @@ mod httphandler;
 
 #[tokio::main]
 async fn main() {
-    let mut http_handler = httphandler::HttpHandler::new("https://paste.loudbook.dev/upload".to_string());
+    let mut http_handler = httphandler::HttpHandler::new("http://127.0.0.1:25658/upload".to_string());
 
     let mut sys = System::new();
     sys.refresh_all();
@@ -94,7 +94,7 @@ async fn main() {
     let processes = datagatherers::processes::gather_processes(&sys);
     let installed_apps = datagatherers::installed::gather_installed();
 
-    println!("Total Processes: {}", processes.iter().clone().map(|p| p.amount).sum::<u16>());
+    http_handler.add_line(format!("Total Processes: {}", processes.iter().clone().map(|p| p.amount).sum::<u16>()));
 
     const MEMORY_SPACES: usize = 6;
     const AMOUNT_SPACES: usize = 3;

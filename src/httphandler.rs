@@ -21,16 +21,12 @@ impl HttpHandler {
         let client = Client::new();
         let username = whoami::username();
         let title = format!("{}'s Full Report", username);
-        
-        let res = client.post(&self.url)
+
+        client.post(&self.url)
             .body(self.lines.join("\n"))
             .header("Content-Type", "text/plain")
             .header("Title", title)
             .send()
-            .await;
-
-        if let Err(e) = res {
-            eprintln!("Failed to submit data: {}", e);
-        }
+            .await.unwrap();
     }
 }
