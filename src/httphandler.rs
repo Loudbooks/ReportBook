@@ -17,10 +17,10 @@ impl HttpHandler {
         self.lines.push(line);
     }
 
-    pub async fn submit(&self) {
+    pub async fn submit(&self, name: &str) {
+        println!("Uploading your paste...");
         let client = Client::new();
-        let username = whoami::username();
-        let title = format!("{}'s FullReport", username);
+        let title = format!("{}'s FullReport", name);
 
         let result = client.post(&self.url)
             .body(self.lines.join("\n"))
@@ -30,5 +30,6 @@ impl HttpHandler {
             .await.unwrap();
         
         println!("View your report at: {}", result.text().await.unwrap());
+        println!("Share this link with whoever asked you to run this report!")
     }
 }

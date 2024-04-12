@@ -1,3 +1,4 @@
+use std::io::{stdin, stdout, Write};
 use sysinfo::System;
 use crate::process::prettify_memory;
 
@@ -113,14 +114,38 @@ async fn main() {
     for app in installed_apps {
         http_handler.add_line(app.to_string(name_spaces, version_spaces, author_spaces));
     }
-    
-    http_handler.add_line("".to_string());
-    http_handler.add_line("Hosts:".to_string());
-    
+
     let hosts = datagatherers::hosts::gather_hosts();
-    for host in hosts {
-        http_handler.add_line(host);
+
+    if !hosts.is_empty() {
+        http_handler.add_line("".to_string());
+        http_handler.add_line("Hosts:".to_string());
+
+        for host in hosts {
+            http_handler.add_line(host);
+        }
     }
+
+    println!("Enter your username: ");
+    let username = user_input();
     
-    http_handler.submit().await;
+    http_handler.submit(username.as_str()).await;
+    
+    wait_for_enter("exit")
+}
+
+fn user_input() -> String {
+    let mut input= String::new();
+
+    stdout().flush().expect("Failed to flush");
+    stdin().read_line(&mut input).expect("Did not enter a correct string");
+
+    input = input.trim().to_string();
+
+    input
+}
+
+fn wait_for_enter(message: &str) {
+    println!("Press enter to {}.", message);
+    let _ = stdin().read_line(&mut String::new());
 }
