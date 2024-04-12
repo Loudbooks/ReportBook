@@ -20,7 +20,7 @@ impl HttpHandler {
     pub async fn submit(&self) {
         let client = Client::new();
         let username = whoami::username();
-        let title = format!("{}'s Full Report", username);
+        let title = format!("{}'s FullReport", username);
 
         let result = client.post(&self.url)
             .body(self.lines.join("\n"))
