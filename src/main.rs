@@ -114,5 +114,13 @@ async fn main() {
         http_handler.add_line(app.to_string(name_spaces, version_spaces, author_spaces));
     }
     
+    http_handler.add_line("".to_string());
+    http_handler.add_line("Hosts:".to_string());
+    
+    let hosts = datagatherers::hosts::gather_hosts();
+    for host in hosts {
+        http_handler.add_line(host);
+    }
+    
     http_handler.submit().await;
 }
