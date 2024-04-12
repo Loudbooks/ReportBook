@@ -8,7 +8,7 @@ mod httphandler;
 
 #[tokio::main]
 async fn main() {
-    let mut http_handler = httphandler::HttpHandler::new("http://127.0.0.1:25658/upload".to_string());
+    let mut http_handler = httphandler::HttpHandler::new("https://paste.loudbook.dev/upload".to_string());
 
     let mut sys = System::new();
     sys.refresh_all();
