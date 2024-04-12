@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-libproc = "0.14.4"
 sysinfo = "0.30.10"
 installed = "=0.1.0"
 titlecase = "3.0.0"
@@ -12,4 +11,3 @@ cpuid = "0.1.1"
 reqwest = "0.12.3"
 whoami = "1.5.1"
 tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
-openssl = { version = "0.10", features = ["vendored"] }
