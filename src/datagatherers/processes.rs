@@ -11,7 +11,7 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
                 let amount = if processes.iter().any(|p| p.name == process.name()) {
                     let new_process = processes.iter_mut().find(|p| p.name == process.name()).unwrap();
                     new_process.amount += 1;
-                    new_process.memory += process.memory();
+                    new_process.memory += process.memory() as f64;
 
                     continue
                 } else {
@@ -22,7 +22,7 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
                     pid: *pid,
                     name: process.name().to_string(),
                     path: process.cwd().unwrap().to_str().unwrap().to_string(),
-                    memory: process.memory(),
+                    memory: process.memory() as f64,
                     amount
                 };
 
@@ -30,7 +30,7 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
             }
         }
     }
-    processes.sort_by_key(|p| p.memory);
+    processes.sort_by_key(|p| p.memory as i64);
     processes.reverse();
     
     processes

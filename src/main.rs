@@ -39,28 +39,28 @@ async fn main() {
         let id = "Total Memory: ";
 
         let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_memory))
+        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_memory as f64))
     };
 
     let total_swap_str = {
         let id = "Total Swap: ";
 
         let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_swap))
+        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_swap as f64))
     };
 
     let total_memory_used_str = {
         let id = "Total Memory Used: ";
 
         let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_memory_used))
+        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_memory_used as f64))
     };
 
     let total_swap_used_str = {
         let id = "Total Swap Used: ";
 
         let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_swap_used))
+        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_swap_used as f64))
     };
 
     let cpu = {
@@ -96,7 +96,7 @@ async fn main() {
 
     http_handler.add_line(format!("Total Processes: {}", processes.iter().clone().map(|p| p.amount).sum::<u16>()));
 
-    const MEMORY_SPACES: usize = 6;
+    const MEMORY_SPACES: usize = 9;
     const AMOUNT_SPACES: usize = 3;
     let path_spaces: usize = MEMORY_SPACES + AMOUNT_SPACES + 5 + processes.iter().map(|p| p.name.len()).max().unwrap_or(0);
 

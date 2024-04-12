@@ -4,7 +4,7 @@ pub struct Process {
     pub pid: Pid,
     pub name: String,
     pub path: String,
-    pub memory: u64,
+    pub memory: f64,
     pub amount: u16
 }
 
@@ -33,14 +33,16 @@ impl Process {
     }
 }
 
-pub fn prettify_memory(memory: u64) -> String {
-    if memory < 1024 {
-        format!("{} B", memory)
-    } else if memory < 1024 * 1024 {
-        format!("{} KB", memory / 1024)
-    } else if memory < 1024 * 1024 * 1024 {
-        format!("{} MB", memory / 1024 / 1024)
+pub fn prettify_memory(memory: f64) -> String {
+    const PRECISION: usize = 1;
+    
+    if memory < 1024f64 {
+        format!("{:.1$} B", memory, PRECISION)
+    } else if memory < 1024f64 * 1024f64 {
+        format!("{:.1$} KB", memory / 1024f64, PRECISION)
+    } else if memory < 1024f64 * 1024f64 * 1024f64 {
+        format!("{:.1$} MB", memory / 1024f64 / 1024f64, PRECISION)
     } else {
-        format!("{} GB", memory / 1024 / 1024 / 1024)
+        format!("{:.1$} GB", memory / 1024f64 / 1024f64 / 1024f64, PRECISION)
     }
 }
