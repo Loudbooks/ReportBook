@@ -22,11 +22,13 @@ impl HttpHandler {
         let username = whoami::username();
         let title = format!("{}'s Full Report", username);
 
-        client.post(&self.url)
+        let result = client.post(&self.url)
             .body(self.lines.join("\n"))
-            .header("Content-Type", "text/plain")
-            .header("Title", title)
+            .header("content-type", "text/plain")
+            .header("title", title)
             .send()
             .await.unwrap();
+        
+        println!("View your report at: {}", result.text().await.unwrap());
     }
 }

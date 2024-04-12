@@ -21,7 +21,7 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
                 let process = Process {
                     pid: *pid,
                     name: process.name().to_string(),
-                    path: process.cwd().unwrap().to_string_lossy().to_string(),
+                    path: process.cwd().unwrap().to_str().unwrap().to_string(),
                     memory: process.memory(),
                     amount
                 };
