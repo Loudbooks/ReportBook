@@ -13,5 +13,5 @@ pub fn gather_hosts() -> Vec<String> {
     let hosts = hosts.unwrap();
     let hosts = hosts.split('\n');
     
-    hosts.filter(|host| !host.starts_with('#')).map(|host| host.to_string()).collect()
+    hosts.filter(|host| !host.starts_with('#') && !host.is_empty()).map(|host| host.to_string()).collect()
 }
