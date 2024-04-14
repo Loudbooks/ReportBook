@@ -116,7 +116,7 @@ async fn main() {
     }
 
     let hosts = datagatherers::hosts::gather_hosts();
-
+    
     if !hosts.is_empty() {
         http_handler.add_line("".to_string());
         http_handler.add_line("Hosts:".to_string());
