@@ -1,4 +1,5 @@
 use std::io::{stdin, stdout, Write};
+use machine_info::Machine;
 use sysinfo::System;
 use crate::process::prettify_memory;
 
@@ -14,14 +15,17 @@ async fn main() {
     let mut sys = System::new_all();
     sys.refresh_all();
 
+    let mut machine = Machine::new();
+
     let total_memory = sys.total_memory();
     let total_swap = sys.total_swap();
     let total_memory_used = sys.used_memory();
     let total_swap_used = sys.used_swap();
     let mut cpu = sys.cpus().get(0).unwrap().brand();
     let cpus = sys.cpus().len();
+    let gpus = machine.system_info().graphics;
     let is_alphanumeric_username = whoami::username().chars().all(char::is_alphanumeric);
-    
+
     if cfg!(target_arch = "aarch64") && cfg!(target_os = "macos") {
         cpu = "Apple Silicon";
     }
@@ -78,10 +82,24 @@ async fn main() {
         let spaces = INFORMATION_SPACES - id.len();
         format!("{}{}{}", id, " ".repeat(spaces), cpus)
     };
-    
+
+    let gpu = {
+        let id = "GPU: ";
+        let mut gpu_str = String::new();
+        let spaces = INFORMATION_SPACES - id.len();
+
+        for graphics in gpus {
+            let str = format!("{}", graphics.name);
+
+            gpu_str.push_str(format!("{}{}{}\n", id, " ".repeat(spaces).as_str(), str.as_str()).as_str())
+        }
+
+        gpu_str
+    };
+
     let alphanumeric_username = {
         let id = "Username: ";
-        
+
         let value = if is_alphanumeric_username {
             "Alphanumeric"
         } else {
@@ -103,6 +121,7 @@ async fn main() {
     }
     http_handler.add_line(cpu);
     http_handler.add_line(cpus);
+    http_handler.add_line(gpu);
     http_handler.add_line(alphanumeric_username);
     http_handler.add_line("".to_string());
 
@@ -131,7 +150,7 @@ async fn main() {
     }
 
     let hosts = datagatherers::hosts::gather_hosts();
-    
+
     if !hosts.is_empty() {
         http_handler.add_line("".to_string());
         http_handler.add_line("Hosts:".to_string());

@@ -11,3 +11,4 @@ cpuid = "0.1.1"
 reqwest = "0.12.3"
 tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
 whoami = "1.5.1"
+machine-info = "1.0.6"
