@@ -110,8 +110,6 @@ async fn main() {
         format!("{}{}{}", id, " ".repeat(spaces), value)
     };
     
-    println!("{}", non_alphanumeric);
-
     http_handler.add_line(os_name_str.to_string());
     http_handler.add_line(total_memory_str);
     if total_swap > 0 {
