@@ -2,6 +2,7 @@ use sysinfo::System;
 use crate::process::Process;
 
 pub fn gather_processes(sys: &System) -> Vec<Process> {
+    let username = whoami::username();
     let mut processes: Vec<Process> = Vec::new();
 
     for (pid, process) in sys.processes() {
@@ -17,11 +18,15 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
                 } else {
                     1
                 };
+                
+                let hashtags = '#'.to_string().repeat(username.len());
+                
+                let path = process.cwd().unwrap().to_str().unwrap().replace(username.as_str(), hashtags.as_str());
 
                 let process = Process {
                     pid: *pid,
                     name: process.name().to_string(),
-                    path: process.cwd().unwrap().to_str().unwrap().to_string(),
+                    path,
                     memory: process.memory() as f64,
                     amount
                 };
