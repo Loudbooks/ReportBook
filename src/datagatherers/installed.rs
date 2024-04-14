@@ -31,7 +31,7 @@ pub fn gather_installed() -> Vec<App> {
         installed_apps.push(app);
     }
     
-    installed_apps.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name));
+    installed_apps.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
     
     installed_apps
 } 

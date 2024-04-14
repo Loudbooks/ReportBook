@@ -24,7 +24,8 @@ async fn main() {
     let cpu = sys.cpus().first().unwrap().brand();
     let cpus = sys.cpus().len();
     let gpus = machine.system_info().graphics;
-    let is_alphanumeric_username = whoami::username().chars().all(char::is_alphanumeric);
+    let username = whoami::username();
+    let is_alphanumeric_username = username.chars().all(char::is_alphanumeric);
 
     let os_name = format!("{}, {}", System::name().unwrap_or("Unknown".to_string()), System::os_version().unwrap_or("Unknown".to_string()));
 
@@ -92,19 +93,24 @@ async fn main() {
 
         gpu_str
     };
-
+    
+    let bad_chars = username.chars().filter(|c| !c.is_alphanumeric()).map(|c| c.to_string()).collect::<Vec<String>>().join(", ");
+    let non_alphanumeric = format!("Contains {}", bad_chars.clone());
+    
     let alphanumeric_username = {
         let id = "Username: ";
 
         let value = if is_alphanumeric_username {
             "Alphanumeric"
         } else {
-            "None-Alphanumeric"
+            non_alphanumeric.as_str()
         };
 
         let spaces = INFORMATION_SPACES - id.len();
         format!("{}{}{}", id, " ".repeat(spaces), value)
     };
+    
+    println!("{}", non_alphanumeric);
 
     http_handler.add_line(os_name_str.to_string());
     http_handler.add_line(total_memory_str);
