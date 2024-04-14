@@ -11,16 +11,17 @@ mod httphandler;
 async fn main() {
     let mut http_handler = httphandler::HttpHandler::new("https://pastebook.dev/upload".to_string());
 
-    let mut sys = System::new();
+    let mut sys = System::new_all();
     sys.refresh_all();
 
     let total_memory = sys.total_memory();
     let total_swap = sys.total_swap();
     let total_memory_used = sys.used_memory();
     let total_swap_used = sys.used_swap();
-    let mut cpu = sys.global_cpu_info().vendor_id();
+    let mut cpu = sys.cpus().get(0).unwrap().brand();
     let cpus = sys.cpus().len();
-
+    let is_alphanumeric_username = whoami::username().chars().all(char::is_alphanumeric);
+    
     if cfg!(target_arch = "aarch64") && cfg!(target_os = "macos") {
         cpu = "Apple Silicon";
     }
@@ -77,6 +78,19 @@ async fn main() {
         let spaces = INFORMATION_SPACES - id.len();
         format!("{}{}{}", id, " ".repeat(spaces), cpus)
     };
+    
+    let alphanumeric_username = {
+        let id = "Username: ";
+        
+        let value = if is_alphanumeric_username {
+            "Alphanumeric"
+        } else {
+            "None-Alphanumeric"
+        };
+
+        let spaces = INFORMATION_SPACES - id.len();
+        format!("{}{}{}", id, " ".repeat(spaces), value)
+    };
 
     http_handler.add_line(os_name_str.to_string());
     http_handler.add_line(total_memory_str);
@@ -89,6 +103,7 @@ async fn main() {
     }
     http_handler.add_line(cpu);
     http_handler.add_line(cpus);
+    http_handler.add_line(alphanumeric_username);
     http_handler.add_line("".to_string());
 
     let processes = datagatherers::processes::gather_processes(&sys);
@@ -98,7 +113,7 @@ async fn main() {
 
     const MEMORY_SPACES: usize = 9;
     const AMOUNT_SPACES: usize = 3;
-    let path_spaces: usize = MEMORY_SPACES + AMOUNT_SPACES + 5 + processes.iter().map(|p| p.name.len()).max().unwrap_or(0);
+    let path_spaces: usize = MEMORY_SPACES + AMOUNT_SPACES + 7 + processes.iter().map(|p| p.name.len()).max().unwrap_or(0);
 
     for process in processes {
         http_handler.add_line(process.to_string(MEMORY_SPACES, AMOUNT_SPACES, path_spaces));
