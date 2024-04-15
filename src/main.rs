@@ -9,6 +9,19 @@ mod httphandler;
 mod process;
 
 fn main() {
+    let intro = r#"
+Welcome to ReportBook
+
+The intention of this process is to gather information on hardware and software present on your device. This includes a list of all running processes, installed processes, and a report of your system's hosts file.
+
+Rest assured, identifiable information including your name and your address will be omitted from the resulting report.
+
+Reports will be uploaded to a pastebin, to expire after nine hours.
+    "#;
+
+    println!("{}", intro);
+    wait_for_enter("continue");
+
     let mut http_handler =
         httphandler::HttpHandler::new("https://pastebook.dev/upload".to_string());
 

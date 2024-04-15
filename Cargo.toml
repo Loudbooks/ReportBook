@@ -11,3 +11,9 @@ whoami = "1.5.1"
 machine-info = "1.0.6"
 ureq = { version = "2.9.6", default-features = false, features = ["native-tls"] }
 native-tls = "0.2.11"
+
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1

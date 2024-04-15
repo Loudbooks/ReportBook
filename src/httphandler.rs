@@ -30,7 +30,7 @@ impl HttpHandler {
         let result = agent
             .post(&self.url)
             .set("content-type", "text/plain")
-            .set("title", &title)
+            .set("title", title.as_str())
             .send(Cursor::new(self.lines.join("\n")))
             .unwrap()
             .into_string()
