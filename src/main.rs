@@ -231,7 +231,7 @@ Reports will be uploaded to a pastebin, to expire after nine hours.
         }
     }
 
-    println!("Enter your username: ");
+    print!("Enter your username: ");
     let username = user_input();
 
     http_handler.submit(username.as_str());

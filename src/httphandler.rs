@@ -1,7 +1,8 @@
-use native_tls::TlsConnector;
 use std::io::Cursor;
 use std::sync::Arc;
-use ureq::{Agent, AgentBuilder};
+
+use native_tls::TlsConnector;
+use ureq::AgentBuilder;
 
 pub struct HttpHandler {
     pub url: String,
@@ -31,6 +32,7 @@ impl HttpHandler {
             .post(&self.url)
             .set("content-type", "text/plain")
             .set("title", title.as_str())
+            .set("reportbook", "true")
             .send(Cursor::new(self.lines.join("\n")))
             .unwrap()
             .into_string()
