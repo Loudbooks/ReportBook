@@ -515,6 +515,7 @@ dependencies = [
  "cpuid",
  "installed",
  "machine-info",
+ "native-tls",
  "sysinfo 0.30.10",
  "ureq",
  "whoami",

@@ -1,4 +1,7 @@
+use native_tls::TlsConnector;
 use std::io::Cursor;
+use std::sync::Arc;
+use ureq::{Agent, AgentBuilder};
 
 pub struct HttpHandler {
     pub url: String,
@@ -21,7 +24,11 @@ impl HttpHandler {
         println!("Uploading your paste...");
         let title = format!("{}'s ReportBook", name);
 
-        let result = ureq::post(&self.url)
+        let agent = AgentBuilder::new()
+            .tls_connector(Arc::new(TlsConnector::new().unwrap()))
+            .build();
+        let result = agent
+            .post(&self.url)
             .set("content-type", "text/plain")
             .set("title", title.as_str())
             .send(Cursor::new(self.lines.join("\n")))
