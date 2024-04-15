@@ -1,4 +1,3 @@
-use titlecase::titlecase;
 use crate::app::App;
 
 pub fn gather_installed() -> Vec<App> {
@@ -8,7 +7,7 @@ pub fn gather_installed() -> Vec<App> {
     for app in apps {
         let name = app.name();
         let version = app.version();
-        let publisher = titlecase(app.publisher().to_string().as_str());
+        let publisher = app.publisher();
 
         if name.is_empty() {
             continue;
@@ -25,13 +24,13 @@ pub fn gather_installed() -> Vec<App> {
         let app = App {
             name: name.to_string(),
             version: version.to_string(),
-            author: publisher,
+            author: publisher.to_string(),
         };
 
         installed_apps.push(app);
     }
-    
+
     installed_apps.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
-    
+
     installed_apps
-} 
+}

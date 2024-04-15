@@ -5,11 +5,16 @@ pub struct Process {
     pub name: String,
     pub path: String,
     pub memory: f64,
-    pub amount: u16
+    pub amount: u16,
 }
 
 impl Process {
-    pub fn to_string(&self, memory_spaces: usize, amount_spaces: usize, path_spaces: usize) -> String {
+    pub fn to_string(
+        &self,
+        memory_spaces: usize,
+        amount_spaces: usize,
+        path_spaces: usize,
+    ) -> String {
         let memory_amount = prettify_memory(self.memory);
 
         let memory_amount = format!("{:width$}", memory_amount, width = memory_spaces);
@@ -28,14 +33,17 @@ impl Process {
 
             let path = format!("{} {}", spaces, self.path);
 
-            format!("{} │ {} │ {} {}", self_amount, memory_amount, self.name, path)
+            format!(
+                "{} │ {} │ {} {}",
+                self_amount, memory_amount, self.name, path
+            )
         }
     }
 }
 
 pub fn prettify_memory(memory: f64) -> String {
     const PRECISION: usize = 1;
-    
+
     if memory < 1024f64 {
         format!("{:.1$} B", memory, PRECISION)
     } else if memory < 1024f64 * 1024f64 {

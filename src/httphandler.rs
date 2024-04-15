@@ -1,15 +1,15 @@
-use reqwest::Client;
+use std::io::Cursor;
 
 pub struct HttpHandler {
     pub url: String,
-    pub lines: Vec<String>
+    pub lines: Vec<String>,
 }
 
 impl HttpHandler {
     pub fn new(url: String) -> Self {
         Self {
             url,
-            lines: Vec::new()
+            lines: Vec::new(),
         }
     }
 
@@ -17,19 +17,19 @@ impl HttpHandler {
         self.lines.push(line);
     }
 
-    pub async fn submit(&self, name: &str) {
+    pub fn submit(&self, name: &str) {
         println!("Uploading your paste...");
-        let client = Client::new();
         let title = format!("{}'s ReportBook", name);
 
-        let result = client.post(&self.url)
-            .body(self.lines.join("\n"))
-            .header("content-type", "text/plain")
-            .header("title", title)
-            .send()
-            .await.unwrap();
-        
-        println!("View your report at: {}", result.text().await.unwrap());
+        let result = ureq::post(&self.url)
+            .set("content-type", "text/plain")
+            .set("title", &title)
+            .send(Cursor::new(self.lines.join("\n")))
+            .unwrap()
+            .into_string()
+            .unwrap();
+
+        println!("View your report at: {}", result);
         println!("Share this link with whoever asked you to run this report!")
     }
 }
