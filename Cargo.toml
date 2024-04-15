@@ -6,9 +6,7 @@ edition = "2021"
 [dependencies]
 sysinfo = "0.30.10"
 installed = "=0.1.0"
-titlecase = "3.0.0"
 cpuid = "0.1.1"
-reqwest = "0.12.3"
-tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
 whoami = "1.5.1"
 machine-info = "1.0.6"
+ureq = { version = "2.9.6", default-features = false, features = ["native-tls"] }

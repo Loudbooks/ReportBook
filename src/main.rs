@@ -1,16 +1,16 @@
-use std::io::{stdin, stdout, Write};
-use machine_info::Machine;
-use sysinfo::System;
 use crate::process::prettify_memory;
+use machine_info::Machine;
+use std::io::{stdin, stdout, Write};
+use sysinfo::System;
 
-mod process;
 mod app;
 mod datagatherers;
 mod httphandler;
+mod process;
 
-#[tokio::main]
-async fn main() {
-    let mut http_handler = httphandler::HttpHandler::new("https://pastebook.dev/upload".to_string());
+fn main() {
+    let mut http_handler =
+        httphandler::HttpHandler::new("https://pastebook.dev/upload".to_string());
 
     let mut sys = System::new_all();
     sys.refresh_all();
@@ -27,7 +27,11 @@ async fn main() {
     let username = whoami::username();
     let is_alphanumeric_username = username.chars().all(char::is_alphanumeric);
 
-    let os_name = format!("{}, {}", System::name().unwrap_or("Unknown".to_string()), System::os_version().unwrap_or("Unknown".to_string()));
+    let os_name = format!(
+        "{}, {}",
+        System::name().unwrap_or("Unknown".to_string()),
+        System::os_version().unwrap_or("Unknown".to_string())
+    );
 
     const INFORMATION_SPACES: usize = 20;
 
@@ -42,28 +46,48 @@ async fn main() {
         let id = "Total Memory: ";
 
         let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_memory as f64))
+        format!(
+            "{}{}{}",
+            id,
+            " ".repeat(spaces),
+            prettify_memory(total_memory as f64)
+        )
     };
 
     let total_swap_str = {
         let id = "Total Swap: ";
 
         let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_swap as f64))
+        format!(
+            "{}{}{}",
+            id,
+            " ".repeat(spaces),
+            prettify_memory(total_swap as f64)
+        )
     };
 
     let total_memory_used_str = {
         let id = "Total Memory Used: ";
 
         let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_memory_used as f64))
+        format!(
+            "{}{}{}",
+            id,
+            " ".repeat(spaces),
+            prettify_memory(total_memory_used as f64)
+        )
     };
 
     let total_swap_used_str = {
         let id = "Total Swap Used: ";
 
         let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), prettify_memory(total_swap_used as f64))
+        format!(
+            "{}{}{}",
+            id,
+            " ".repeat(spaces),
+            prettify_memory(total_swap_used as f64)
+        )
     };
 
     let cpu = {
@@ -88,15 +112,22 @@ async fn main() {
         for graphics in gpus {
             let str = graphics.name.to_string();
 
-            gpu_str.push_str(format!("{}{}{}\n", id, " ".repeat(spaces).as_str(), str.as_str()).as_str())
+            gpu_str.push_str(
+                format!("{}{}{}\n", id, " ".repeat(spaces).as_str(), str.as_str()).as_str(),
+            )
         }
 
         gpu_str
     };
-    
-    let bad_chars = username.chars().filter(|c| !c.is_alphanumeric()).map(|c| c.to_string()).collect::<Vec<String>>().join(", ");
+
+    let bad_chars = username
+        .chars()
+        .filter(|c| !c.is_alphanumeric())
+        .map(|c| c.to_string())
+        .collect::<Vec<String>>()
+        .join(", ");
     let non_alphanumeric = format!("Contains {}", bad_chars.clone());
-    
+
     let alphanumeric_username = {
         let id = "Username: ";
 
@@ -109,7 +140,7 @@ async fn main() {
         let spaces = INFORMATION_SPACES - id.len();
         format!("{}{}{}", id, " ".repeat(spaces), value)
     };
-    
+
     http_handler.add_line(os_name_str.to_string());
     http_handler.add_line(total_memory_str);
     if total_swap > 0 {
@@ -130,11 +161,17 @@ async fn main() {
     let processes = datagatherers::processes::gather_processes(&sys);
     let installed_apps = datagatherers::installed::gather_installed();
 
-    http_handler.add_line(format!("Total Processes: {}", processes.iter().clone().map(|p| p.amount).sum::<u16>()));
+    http_handler.add_line(format!(
+        "Total Processes: {}",
+        processes.iter().clone().map(|p| p.amount).sum::<u16>()
+    ));
 
     const MEMORY_SPACES: usize = 9;
     const AMOUNT_SPACES: usize = 3;
-    let path_spaces: usize = MEMORY_SPACES + AMOUNT_SPACES + 7 + processes.iter().map(|p| p.name.len()).max().unwrap_or(0);
+    let path_spaces: usize = MEMORY_SPACES
+        + AMOUNT_SPACES
+        + 7
+        + processes.iter().map(|p| p.name.len()).max().unwrap_or(0);
 
     for process in processes {
         http_handler.add_line(process.to_string(MEMORY_SPACES, AMOUNT_SPACES, path_spaces));
@@ -143,9 +180,21 @@ async fn main() {
     http_handler.add_line("".to_string());
     http_handler.add_line("Installed Apps:".to_string());
 
-    let name_spaces = installed_apps.iter().map(|a| a.name.len()).max().unwrap_or(0);
-    let version_spaces = installed_apps.iter().map(|a| a.version.len()).max().unwrap_or(0);
-    let author_spaces = installed_apps.iter().map(|a| a.author.len()).max().unwrap_or(0);
+    let name_spaces = installed_apps
+        .iter()
+        .map(|a| a.name.len())
+        .max()
+        .unwrap_or(0);
+    let version_spaces = installed_apps
+        .iter()
+        .map(|a| a.version.len())
+        .max()
+        .unwrap_or(0);
+    let author_spaces = installed_apps
+        .iter()
+        .map(|a| a.author.len())
+        .max()
+        .unwrap_or(0);
 
     for app in installed_apps {
         http_handler.add_line(app.to_string(name_spaces, version_spaces, author_spaces));
@@ -164,17 +213,19 @@ async fn main() {
 
     println!("Enter your username: ");
     let username = user_input();
-    
-    http_handler.submit(username.as_str()).await;
-    
+
+    http_handler.submit(username.as_str());
+
     wait_for_enter("exit")
 }
 
 fn user_input() -> String {
-    let mut input= String::new();
+    let mut input = String::new();
 
     stdout().flush().expect("Failed to flush");
-    stdin().read_line(&mut input).expect("Did not enter a correct string");
+    stdin()
+        .read_line(&mut input)
+        .expect("Did not enter a correct string");
 
     input = input.trim().to_string();
 
