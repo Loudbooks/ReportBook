@@ -1,5 +1,5 @@
-use sysinfo::System;
 use crate::process::Process;
+use sysinfo::System;
 
 pub fn gather_processes(sys: &System) -> Vec<Process> {
     let username = whoami::username();
@@ -10,21 +10,30 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
             None => {}
             Some(_) => {
                 let amount = if processes.iter().any(|p| p.name == process.name()) {
-                    let new_process = processes.iter_mut().find(|p| p.name == process.name()).unwrap();
+                    let new_process = processes
+                        .iter_mut()
+                        .find(|p| p.name == process.name())
+                        .unwrap();
                     new_process.amount += 1;
                     new_process.memory += process.memory() as f64;
 
-                    continue
+                    continue;
                 } else {
                     1
                 };
-                
+
                 let hashtags = '#'.to_string().repeat(username.len());
 
                 let path = if cfg!(target_os = "windows") {
-                    process.cwd().unwrap().to_str().unwrap().replace(format!("\\{}\\", username).as_str(), format!("\\{}\\", hashtags.as_str()).as_str())
+                    process.cwd().unwrap().to_str().unwrap().replace(
+                        format!("\\{}\\", username).as_str(),
+                        format!("\\{}\\", hashtags.as_str()).as_str(),
+                    )
                 } else {
-                    process.cwd().unwrap().to_str().unwrap().replace(format!("/{}/", username).as_str(), format!("/{}/", hashtags.as_str()).as_str())
+                    process.cwd().unwrap().to_str().unwrap().replace(
+                        format!("/{}/", username).as_str(),
+                        format!("/{}/", hashtags.as_str()).as_str(),
+                    )
                 };
 
                 let process = Process {
@@ -32,7 +41,7 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
                     name: process.name().to_string(),
                     path,
                     memory: process.memory() as f64,
-                    amount
+                    amount,
                 };
 
                 processes.push(process);
@@ -41,6 +50,6 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
     }
     processes.sort_by_key(|p| p.memory as i64);
     processes.reverse();
-    
+
     processes
 }

@@ -5,7 +5,12 @@ pub struct App {
 }
 
 impl App {
-    pub fn to_string(&self, name_spaces: usize, version_spaces: usize, author_spaces: usize) -> String {
+    pub fn to_string(
+        &self,
+        name_spaces: usize,
+        version_spaces: usize,
+        author_spaces: usize,
+    ) -> String {
         let name = format!("{:width$}", self.name, width = name_spaces);
         let version = format!("{:width$}", self.version, width = version_spaces);
         let author = format!("{:width$}", self.author, width = author_spaces);
