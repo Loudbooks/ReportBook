@@ -10,3 +10,4 @@ cpuid = "0.1.1"
 whoami = "1.5.1"
 machine-info = "1.0.6"
 ureq = { version = "2.9.6", default-features = false, features = ["native-tls"] }
+native-tls = "0.2.11"
