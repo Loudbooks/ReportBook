@@ -1,4 +1,4 @@
-use reqwest::Client;
+use ureq::post;
 
 pub struct HttpHandler {
     pub url: String,
@@ -17,19 +17,18 @@ impl HttpHandler {
         self.lines.push(line);
     }
 
-    pub async fn submit(&self, name: &str) {
+    pub fn submit(&self, name: &str) {
         println!("Uploading your paste...");
-        let client = Client::new();
         let title = format!("{}'s ReportBook", name);
 
-        let result = client.post(&self.url)
-            .body(self.lines.join("\n"))
-            .header("content-type", "text/plain")
-            .header("title", title)
-            .send()
-            .await.unwrap();
+        let result = post(&self.url)
+            .set("content-type", "text/plain")
+            .set("title", title.as_str())
+            .send_string(&self.lines.join("\n"))
+            .unwrap()
+            .into_string();
         
-        println!("View your report at: {}", result.text().await.unwrap());
+        println!("View your report at: {}", result.unwrap_or("".to_string()));
         println!("Share this link with whoever asked you to run this report!")
     }
 }
