@@ -1,4 +1,3 @@
-use std::fmt::format;
 use sysinfo::System;
 use crate::process::Process;
 
@@ -21,8 +20,8 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
                 };
                 
                 let hashtags = '#'.to_string().repeat(username.len());
-                
-                let path = if cfg!(target_os = "windows") { 
+
+                let path = if cfg!(target_os = "windows") {
                     process.cwd().unwrap().to_str().unwrap().replace(format!("\\{}\\", username).as_str(), format!("\\{}\\", hashtags.as_str()).as_str())
                 } else {
                     process.cwd().unwrap().to_str().unwrap().replace(format!("/{}/", username).as_str(), format!("/{}/", hashtags.as_str()).as_str())

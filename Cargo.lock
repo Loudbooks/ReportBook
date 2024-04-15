@@ -263,20 +263,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fullreport"
-version = "0.1.0"
-dependencies = [
- "cpuid",
- "installed",
- "machine-info",
- "reqwest",
- "sysinfo 0.30.10",
- "titlecase",
- "tokio",
- "whoami",
-]
-
-[[package]]
 name = "futures-channel"
 version = "0.3.30"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -865,6 +851,20 @@ name = "regex-syntax"
 version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e179439d1f56"
+
+[[package]]
+name = "reportbook"
+version = "0.1.0"
+dependencies = [
+ "cpuid",
+ "installed",
+ "machine-info",
+ "reqwest",
+ "sysinfo 0.30.10",
+ "titlecase",
+ "tokio",
+ "whoami",
+]
 
 [[package]]
 name = "reqwest"
