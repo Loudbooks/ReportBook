@@ -122,12 +122,19 @@ Reports will be uploaded to a pastebin, to expire after nine hours.
         let mut gpu_str = String::new();
         let spaces = INFORMATION_SPACES - id.len();
 
-        for graphics in gpus {
+        let mut index = 0;
+        for graphics in &gpus {
             let str = graphics.name.to_string();
 
             gpu_str.push_str(
-                format!("{}{}{}\n", id, " ".repeat(spaces).as_str(), str.as_str()).as_str(),
-            )
+                format!("{}{}{}", id, " ".repeat(spaces).as_str(), str.as_str()).as_str(),
+            );
+
+            if index < &gpus.len() - 1 {
+                gpu_str.push_str("\n");
+            }
+
+            index += 1;
         }
 
         gpu_str
