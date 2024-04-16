@@ -1,6 +1,6 @@
 <div align="center">
   <h1>ReportBook</h1>
-  <p></p>Simplistic automated computer diagnostic tool</p>
+  <p></p>Simplistic automated diagnostic tool</p>
   
   ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/rust.yml)
 </div>
