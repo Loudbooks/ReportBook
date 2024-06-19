@@ -5,11 +5,21 @@
   ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/rust.yml?style=for-the-badge)
 </div>
 
-ReportBook is a process used to diagnose a variety of possible issues on your device. Personal information is automatically blocked from the output of this program, ensuring your security. Output is uploaded to [PasteBook](https://pastebook.dev), to be deleted entirely after 24 hours. You can find an example [here](https://pastebook.dev/pastes/millie-shadow-bard-milkchocolate?inspect).
+ReportBook is a process used to diagnose a variety of possible issues on your device. Output is uploaded to [PasteBook](https://pastebook.dev), to be deleted entirely after 24 hours. You can find an example [here](https://pastebook.dev/pastes/millie-shadow-bard-milkchocolate?inspect).
 
 This program was designed with the intention of being used by software support teams, but is available to anyone who wishes to use it. Source code can be viewed on [GitHub](https://github.com/Loudbooks/ReportBook) should you be interested in how it works.
 
 All Windows releases have submitted to Microsoft for review, further ensuring your security.
+
+### Collected Information
+- Running Processes
+- Installed Apps
+- Hosts File
+- Hardware Information (CPU, GPU, RAM)
+
+Your system username will be exempt from output.
+
+
 # Usage
 ### Windows
 1. Download the latest release [here](https://github.com/Loudbooks/ReportBook/releases/latest/download/reportbook-windows-x86_64.exe).
