@@ -15,7 +15,7 @@ All Windows releases have submitted to Microsoft for review, further ensuring yo
 - Running Processes
 - Installed Apps
 - Hosts File
-- Hardware Information (CPU, GPU, RAM)
+- Hardware Information (OS, CPU, GPU, RAM)
 
 Your system username will be exempt from output.
 
