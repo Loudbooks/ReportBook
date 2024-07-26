@@ -1,11 +1,13 @@
-use crate::process::prettify_memory;
+use std::io::stdin;
+
 use machine_info::Machine;
-use std::io::{stdin, stdout, Write};
 use sysinfo::System;
+
+use crate::process::prettify_memory;
 
 mod app;
 mod datagatherers;
-mod httphandler;
+mod file_handler;
 mod process;
 
 fn main() {
@@ -16,14 +18,14 @@ The intention of this process is to gather information on hardware and software 
 
 Rest assured, identifiable information including your name and your address will be omitted from the resulting report.
 
-Reports will be uploaded to a pastebin, to expire after nine hours.
+Reports will be opened in your default text editor once completed.
     "#;
 
     println!("{}", intro);
     wait_for_enter("continue");
 
     let mut http_handler =
-        httphandler::HttpHandler::new("https://pastebook.dev/upload".to_string());
+        file_handler::FileHandler::new();
 
     let mut sys = System::new_all();
     sys.refresh_all();
@@ -39,6 +41,7 @@ Reports will be uploaded to a pastebin, to expire after nine hours.
     let gpus = machine.system_info().graphics;
     let username = whoami::username();
     let is_alphanumeric_username = username.chars().all(char::is_alphanumeric);
+    let log_creation = chrono::Utc::now().format("%Y-%m-%d %H:%M").to_string();
 
     let os_name = format!(
         "{}, {}",
@@ -160,7 +163,14 @@ Reports will be uploaded to a pastebin, to expire after nine hours.
         let spaces = INFORMATION_SPACES - id.len();
         format!("{}{}{}", id, " ".repeat(spaces), value)
     };
+    
+    let log_creation_str = {
+        let id = "Log Creation: ";
 
+        let spaces = INFORMATION_SPACES - id.len();
+        format!("{}{}{}", id, " ".repeat(spaces), log_creation)
+    };
+    
     http_handler.add_line(os_name_str.to_string());
     http_handler.add_line(total_memory_str);
     if total_swap > 0 {
@@ -176,6 +186,8 @@ Reports will be uploaded to a pastebin, to expire after nine hours.
         http_handler.add_line(gpu);
     }
     http_handler.add_line(alphanumeric_username);
+    http_handler.add_line(log_creation_str);
+    
     http_handler.add_line("".to_string());
 
     let processes = datagatherers::processes::gather_processes(&sys);
@@ -231,25 +243,9 @@ Reports will be uploaded to a pastebin, to expire after nine hours.
         }
     }
 
-    print!("Enter your username: ");
-    let username = user_input();
-
-    http_handler.submit(username.as_str());
+    http_handler.submit();
 
     wait_for_enter("exit")
-}
-
-fn user_input() -> String {
-    let mut input = String::new();
-
-    stdout().flush().expect("Failed to flush");
-    stdin()
-        .read_line(&mut input)
-        .expect("Did not enter a correct string");
-
-    input = input.trim().to_string();
-
-    input
 }
 
 fn wait_for_enter(message: &str) {

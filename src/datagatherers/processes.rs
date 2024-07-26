@@ -5,7 +5,7 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
     let username = whoami::username();
     let mut processes: Vec<Process> = Vec::new();
 
-    for (pid, process) in sys.processes() {
+    for (_pid, process) in sys.processes() {
         match process.cwd() {
             None => {}
             Some(_) => {
@@ -37,7 +37,6 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
                 };
 
                 let process = Process {
-                    pid: *pid,
                     name: process.name().to_string(),
                     path,
                     memory: process.memory() as f64,
