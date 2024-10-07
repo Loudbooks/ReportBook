@@ -12,16 +12,17 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, macos-latest]
-        build_type: [Release, RelWithDebInfo]
 
     steps:
     - uses: actions/checkout@v4
 
     - name: Install Packages 
-      run: npm i
+      run: |
+        npm i
+        npm install -g pnpm
 
     - name: Run Tauri Build
-      run: npm run tauri build
+      run: pnpm tauri build
 
     - name: Tree
       run: tree
