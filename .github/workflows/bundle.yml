@@ -25,4 +25,9 @@ jobs:
       run: pnpm tauri build
 
     - name: Tree
+      if: matrix.os == 'macos-latest'
+      run: find .
+      
+    - name: Tree (Windows)
+      if: matrix.os == 'windows-latest'
       run: tree
