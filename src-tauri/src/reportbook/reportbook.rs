@@ -23,6 +23,13 @@ pub fn collect_log() -> String {
     let is_alphanumeric_username = username.chars().all(char::is_alphanumeric);
     let log_creation = chrono::Utc::now().format("%Y-%m-%d %H:%M").to_string();
 
+    let log_creation_str = {
+        let id = "Log Creation: ";
+
+        let spaces = INFORMATION_SPACES - id.len();
+        format!("{}{}{}", id, " ".repeat(spaces), log_creation)
+    };
+
     let os_name = format!(
         "{}, {}",
         System::name().unwrap_or("Unknown".to_string()),
@@ -143,13 +150,10 @@ pub fn collect_log() -> String {
         let spaces = INFORMATION_SPACES - id.len();
         format!("{}{}{}", id, " ".repeat(spaces), value)
     };
-    
-    let log_creation_str = {
-        let id = "Log Creation: ";
 
-        let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), log_creation)
-    };
+    file_handler.add_line(log_creation_str);
+
+    file_handler.add_line("".to_string());
     
     file_handler.add_line(os_name_str.to_string());
     file_handler.add_line(total_memory_str);
@@ -166,8 +170,7 @@ pub fn collect_log() -> String {
         file_handler.add_line(gpu);
     }
     file_handler.add_line(alphanumeric_username);
-    file_handler.add_line(log_creation_str);
-    
+
     file_handler.add_line("".to_string());
 
     let processes = datagatherers::processes::gather_processes(&sys);
