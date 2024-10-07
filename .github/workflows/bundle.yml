@@ -2,9 +2,9 @@ name: Bundle
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "ui" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "ui" ]
     
 jobs:
   build:
