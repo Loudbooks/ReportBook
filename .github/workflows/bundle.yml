@@ -1,0 +1,28 @@
+name: Bundle
+
+on:
+  push:
+    branches: [ "ui" ]
+  pull_request:
+    branches: [ "ui" ]
+    
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Packages 
+      run: |
+        npm i
+        npm install -g pnpm
+
+    - name: Run Tauri Build
+      run: pnpm tauri build
+
+    - name: Tree
+      run: tree
