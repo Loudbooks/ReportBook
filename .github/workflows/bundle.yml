@@ -21,8 +21,33 @@ jobs:
         npm i
         npm install -g pnpm
 
-    - name: Run Tauri Build
-      run: pnpm tauri build
+    - name: Run Tauri Build (MacOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        rustup target add x86_64-apple-darwin
+        pnpm tauri build --target universal-apple-darwin
 
-    - name: Tree
-      run: tree
+    - name: Run Tauri Build (Windows)
+      if: matrix.os == 'windows-latest'
+      run: pnpm tauri build
+      
+    - name: Upload Artifact (MacOS Bundle)
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReportBook MacOS Bundle
+        path: ${{github.workspace}}/src-tauri/target/universal-apple-darwin/release/bundle/macos/ReportBook.app
+
+    - name: Upload Artifact (MacOS Binary)
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReportBook MacOS Binary
+        path: ${{github.workspace}}/src-tauri/target/universal-apple-darwin/release/reportbook
+
+    - name: Upload Artifact (Windows)
+      if: matrix.os == 'windows-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReportBook Windows
+        path: ${{github.workspace}}\src-tauri\target\release\reportbook.exe
