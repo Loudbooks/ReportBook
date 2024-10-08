@@ -24,10 +24,16 @@ jobs:
     - name: Run Tauri Build
       run: pnpm tauri build
 
-    - name: Tree
+    - name: Upload Artifact (MacOS)
       if: matrix.os == 'macos-latest'
-      run: find .
-      
-    - name: Tree (Windows)
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReportBook MacOS
+        path: ${{github.workspace}}/src-tauri/target/release/bundle/macos/ReportBook.app
+
+    - name: Upload Artifact (Windows)
       if: matrix.os == 'windows-latest'
-      run: tree
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReportBook Windows
+        path: ${{github.workspace}}\src-tauri\target\release\reportbook.exe
