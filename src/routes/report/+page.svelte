@@ -130,7 +130,7 @@
   }
 
   h1 {
-    padding-left: 15px;
+    padding-left: 10px;
     font-family: "DM Sans", sans-serif;
     font-weight: 1000;
     margin-top: 10px;
@@ -151,6 +151,7 @@
       text-decoration: underline;
       margin-top: 10px;
       transform: translateY(-5px);
+      padding-right: 10px;
 
       &:hover {
         cursor: pointer;
