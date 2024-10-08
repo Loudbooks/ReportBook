@@ -29,8 +29,6 @@ Your system username will be exempt from output.
 4. When the program has finished, select `Upload to PasteBook` at the bottom.
 5. Copy this link and give it to whoever requested the log.
 
-*All private information is automatically blocked from the output. Feel free to review the log before sharing it.* 
-
 ### macOS
 1. Press `⌘ + Space`, type in `Terminal`, and press Enter. Copy and paste the following command into the terminal and press Enter. 
 ```bash
