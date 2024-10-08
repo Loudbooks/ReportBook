@@ -23,11 +23,11 @@ Your system username will be exempt from output.
 
 # Usage
 ### Windows
-1. Download the latest release [here](https://github.com/Loudbooks/ReportBook/releases/latest/download/reportbook-windows-x86_64.exe).
+1. Download the latest release [here](https://github.com/Loudbooks/ReportBook/releases/latest/download/reportbook.exe).
 2. Double-click the downloaded executable.
-3. Press `Enter` to agree to the terms listed in the console.
-4. Enter your username, this should be something that would be recognizable from the platform this log was requested from, such as your Discord username.
-5. When the program has finished, it will provide you with a link to the log. Share this link with the person who requested it.
+3. Type in your preferred username and select `Continue`.
+4. When the program has finished, select `Upload to PasteBook` at the bottom.
+5. Copy this link and give it to whoever requested the log.
 
 *All private information is automatically blocked from the output. Feel free to review the log before sharing it.* 
 
@@ -36,8 +36,6 @@ Your system username will be exempt from output.
 ```bash
 curl -O https://raw.githubusercontent.com/Loudbooks/ReportBook/master/macos-run.sh ; sh ./macos-run.sh
 ```
-2. Press `Enter` to agree to the terms listed in the console.
-3. Enter your username, this should be something that would be recognizable from the platform this log was requested from, such as your Discord username.
-4. When the program has finished, it will provide you with a link to the log. Share this link with the person who requested it.
-
-*All private information is automatically blocked from the output. Feel free to review the log before sharing it.*
+2. Type in your preferred username and select `Continue`.
+3. When the program has finished, select `Upload to PasteBook` at the bottom.
+4. Copy this link and give it to whoever requested the log.
