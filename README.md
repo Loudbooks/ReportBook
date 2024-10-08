@@ -2,7 +2,6 @@
   <h1>ReportBook</h1>
   <p></p>Simplistic automated diagnostic tool for Windows and macOS</p>
   
-
   ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/build.yml?style=for-the-badge)
 </div>
 
