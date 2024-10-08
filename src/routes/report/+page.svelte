@@ -172,6 +172,7 @@
     flex-grow: 1;
     overflow: hidden;
     margin: 10px 10px 5px;
+    margin-top: 5px;
 
     width: calc(100% - 20px);
     display: flex;
