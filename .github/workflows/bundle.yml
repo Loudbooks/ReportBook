@@ -23,7 +23,9 @@ jobs:
 
     - name: Run Tauri Build (MacOS)
       if: matrix.os == 'macos-latest'
-      run: pnpm tauri build --target universal-apple-darwin
+      run: |
+        rustup target add x86_64-apple-darwin
+        pnpm tauri build --target universal-apple-darwin
 
     - name: Run Tauri Build (Windows)
       if: matrix.os == 'windows-latest'
