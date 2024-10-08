@@ -21,9 +21,14 @@ jobs:
         npm i
         npm install -g pnpm
 
-    - name: Run Tauri Build
-      run: pnpm tauri build
+    - name: Run Tauri Build (MacOS)
+      if: matrix.os == 'macos-latest'
+      run: pnpm tauri build --target universal-apple-darwin
 
+    - name: Run Tauri Build (Windows)
+      if: matrix.os == 'windows-latest'
+      run: pnpm tauri build
+      
     - name: Upload Artifact (MacOS)
       if: matrix.os == 'macos-latest'
       uses: actions/upload-artifact@v4
