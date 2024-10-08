@@ -94,7 +94,7 @@
       font-weight: 850;
       font-size: 7rem;
       margin: 0;
-      letter-spacing: -4px;
+      letter-spacing: -3.5px;
     }
 
     #description {

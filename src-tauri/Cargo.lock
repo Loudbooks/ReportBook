@@ -2628,7 +2628,6 @@ dependencies = [
  "installed",
  "machine-info",
  "native-tls",
- "open",
  "serde",
  "serde_json",
  "sysinfo 0.32.0",
