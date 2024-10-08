@@ -3,7 +3,7 @@
   <p></p>Simplistic automated diagnostic tool for Windows and macOS</p>
   
 
-  ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/rust.yml?style=for-the-badge)
+  ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/build.yml?style=for-the-badge)
 </div>
 
 ReportBook is a process used to diagnose a variety of possible issues on your device. You can find an example [here](https://pastebook.dev/pastes/millie-shadow-bard-milkchocolate?inspect).
