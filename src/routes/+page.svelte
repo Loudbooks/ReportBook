@@ -8,7 +8,7 @@
     let button: HTMLButtonElement;
     let usernameInput: HTMLInputElement;
 
-    async function requestReport(_: MouseEvent) {
+    async function requestReport() {
       button.innerHTML = "Working...";
 
       setTimeout(async () => {
@@ -40,7 +40,13 @@
     <spacer/>
     <items>
         <input-container>
-            <input placeholder="Preferred Username" on:input={checkUsernameInput} bind:this={usernameInput}>
+            <input placeholder="Preferred Username" on:input={checkUsernameInput} on:keyup={
+                (event) => {
+                    if (event.key === "Enter") {
+                        requestReport();
+                    }
+                }
+            } bind:this={usernameInput}>
         </input-container>
         <button id="submit" on:click={requestReport} bind:this={button}>
             Continue
