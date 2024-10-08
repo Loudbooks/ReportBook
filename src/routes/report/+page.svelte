@@ -31,7 +31,8 @@
           headers: {
             'Content-Type': 'text/plain',
             'title': title,
-            'reportbook': 'true'
+            'reportbook': 'true',
+            'unlisted': 'true'
           }
         });
 
