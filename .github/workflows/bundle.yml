@@ -31,12 +31,19 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: pnpm tauri build
       
-    - name: Upload Artifact (MacOS)
+    - name: Upload Artifact (MacOS Bundle)
       if: matrix.os == 'macos-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: ReportBook MacOS
+        name: ReportBook MacOS Bundle
         path: ${{github.workspace}}/src-tauri/target/universal-apple-darwin/release/bundle/macos/ReportBook.app
+
+    - name: Upload Artifact (MacOS Binary)
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReportBook MacOS Binary
+        path: ${{github.workspace}}/src-tauri/target/universal-apple-darwin/release/reportbook
 
     - name: Upload Artifact (Windows)
       if: matrix.os == 'windows-latest'
