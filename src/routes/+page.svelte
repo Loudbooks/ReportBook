@@ -58,13 +58,13 @@
                     Operating System
                 </li>
                 <li>
-                    Hosts File
-                </li>
-                <li>
                     Running Processes
                 </li>
                 <li>
-                    Installed Processes
+                    Installed Apps
+                </li>
+                <li>
+                    Hosts File
                 </li>
             </ul>
             <note>
