@@ -28,7 +28,7 @@ Your system username will be exempt from output.
 
 # Usage
 ### Windows
-1. Download the latest release [here](https://github.com/Loudbooks/ReportBook/releases/latest/download/reportbook.exe).
+1. Download the latest release [here](https://github.com/Loudbooks/ReportBook/releases/latest/download/reportbook-windows.exe).
 2. Double-click the downloaded executable.
 > [!IMPORTANT]
 > **Smartscreen Warning**
