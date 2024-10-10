@@ -1,6 +1,6 @@
 <div align="center">
   <h1>ReportBook</h1>
-  <p></p>Simplistic automated diagnostic tool for Windows and macOS</p>
+  <p></p>Simplistic automated diagnostic tool for Windows and macOS written in <a href="https://tauri.app/">Tauri</a> and <a href="https://www.rust-lang.org/">Rust</a></p>
   
   ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/build.yml?style=for-the-badge)
 </div>
