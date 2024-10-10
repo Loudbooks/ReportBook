@@ -44,7 +44,7 @@ Your system username will be exempt from output.
 ### macOS
 1. Press `⌘ + Space`, type in `Terminal`, and press Enter. Copy and paste the following command into the terminal and press Enter. 
 ```bash
-curl -O -s https://raw.githubusercontent.com/Loudbooks/ReportBook/master/macos-run.sh ; sh ./macos-run.sh
+curl -O -s https://raw.githubusercontent.com/Loudbooks/ReportBook/master/macos-run.sh ; sh ./macos-run.sh ; rm ./macos-run.sh
 ```
 2. Type in your preferred username and select `Continue`.
 3. When the program has finished, select `Upload to PasteBook` at the bottom.
