@@ -1,4 +1,4 @@
-use crate::app::App;
+use crate::reportbook::app::App;
 
 pub fn gather_installed() -> Vec<App> {
     let mut installed_apps: Vec<App> = Vec::new();

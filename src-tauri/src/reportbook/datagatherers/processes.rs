@@ -1,5 +1,5 @@
-use crate::process::Process;
 use sysinfo::System;
+use crate::reportbook::process::Process;
 
 pub fn gather_processes(sys: &System) -> Vec<Process> {
     let username = whoami::username();
@@ -9,10 +9,10 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
         match process.cwd() {
             None => {}
             Some(_) => {
-                let amount = if processes.iter().any(|p| p.name == process.name()) {
+                let amount = if processes.iter().any(|p| p.name == process.name().to_str().unwrap()) {
                     let new_process = processes
                         .iter_mut()
-                        .find(|p| p.name == process.name())
+                        .find(|p| p.name == process.name().to_str().unwrap())
                         .unwrap();
                     new_process.amount += 1;
                     new_process.memory += process.memory() as f64;
@@ -26,18 +26,18 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
 
                 let path = if cfg!(target_os = "windows") {
                     process.cwd().unwrap().to_str().unwrap().replace(
-                        format!("\\{}\\", username).as_str(),
-                        format!("\\{}\\", hashtags.as_str()).as_str(),
+                        format!("\\{}", username).as_str(),
+                        format!("\\{}", hashtags.as_str()).as_str(),
                     )
                 } else {
                     process.cwd().unwrap().to_str().unwrap().replace(
-                        format!("/{}/", username).as_str(),
-                        format!("/{}/", hashtags.as_str()).as_str(),
+                        format!("/{}", username).as_str(),
+                        format!("/{}", hashtags.as_str()).as_str(),
                     )
                 };
 
                 let process = Process {
-                    name: process.name().to_string(),
+                    name: process.name().to_str().unwrap().to_string(),
                     path,
                     memory: process.memory() as f64,
                     amount,

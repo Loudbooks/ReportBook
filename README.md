@@ -2,11 +2,10 @@
   <h1>ReportBook</h1>
   <p></p>Simplistic automated diagnostic tool for Windows and macOS</p>
   
-
-  ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/bundle.yml?style=for-the-badge)
+  ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/build.yml?style=for-the-badge)
 </div>
 
-ReportBook is a process used to diagnose a variety of possible issues on your device. Output is shown in a plain text file. You can find an example [here](https://pastebook.dev/pastes/millie-shadow-bard-milkchocolate?inspect).
+ReportBook is a process used to diagnose a variety of possible issues on your device. You can find an example [here](https://pastebook.dev/pastes/millie-shadow-bard-milkchocolate?inspect).
 
 This program was designed with the intention of being used by software support teams, but is available to anyone who wishes to use it. Source code can be viewed on [GitHub](https://github.com/Loudbooks/ReportBook) should you be interested in how it works.
 
@@ -23,21 +22,17 @@ Your system username will be exempt from output.
 
 # Usage
 ### Windows
-1. Download the latest release [here](https://github.com/Loudbooks/ReportBook/releases/latest/download/reportbook-windows-x86_64.exe).
+1. Download the latest release [here](https://github.com/Loudbooks/ReportBook/releases/latest/download/reportbook.exe).
 2. Double-click the downloaded executable.
-3. Press `Enter` to agree to the terms listed in the console.
-4. Enter your username, this should be something that would be recognizable from the platform this log was requested from, such as your Discord username.
-5. When the program has finished, it will provide you with a link to the log. Share this link with the person who requested it.
-
-*All private information is automatically blocked from the output. Feel free to review the log before sharing it.* 
+3. Type in your preferred username and select `Continue`.
+4. When the program has finished, select `Upload to PasteBook` at the bottom.
+5. Copy this link and give it to whoever requested the log.
 
 ### macOS
 1. Press `⌘ + Space`, type in `Terminal`, and press Enter. Copy and paste the following command into the terminal and press Enter. 
 ```bash
 curl -O https://raw.githubusercontent.com/Loudbooks/ReportBook/master/macos-run.sh ; sh ./macos-run.sh
 ```
-2. Press `Enter` to agree to the terms listed in the console.
-3. Enter your username, this should be something that would be recognizable from the platform this log was requested from, such as your Discord username.
-4. When the program has finished, it will provide you with a link to the log. Share this link with the person who requested it.
-
-*All private information is automatically blocked from the output. Feel free to review the log before sharing it.*
+2. Type in your preferred username and select `Continue`.
+3. When the program has finished, select `Upload to PasteBook` at the bottom.
+4. Copy this link and give it to whoever requested the log.

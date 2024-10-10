@@ -1,30 +1,10 @@
-use std::io::stdin;
-
 use machine_info::Machine;
 use sysinfo::System;
+use crate::reportbook::{datagatherers, file_handler};
+use crate::reportbook::process::prettify_memory;
 
-use crate::process::prettify_memory;
-
-mod app;
-mod datagatherers;
-mod file_handler;
-mod process;
-
-fn main() {
-    let intro = r#"
-Welcome to ReportBook
-
-The intention of this process is to gather information on hardware and software present on your device. This includes a list of all running processes, installed processes, and a report of your system's hosts file.
-
-Rest assured, identifiable information including your name and your address will be omitted from the resulting report.
-
-Reports will be opened in your default text editor once completed.
-    "#;
-
-    println!("{}", intro);
-    wait_for_enter("continue");
-
-    let mut http_handler =
+pub fn collect_log() -> String {
+    let mut file_handler =
         file_handler::FileHandler::new();
 
     let mut sys = System::new_all();
@@ -42,6 +22,13 @@ Reports will be opened in your default text editor once completed.
     let username = whoami::username();
     let is_alphanumeric_username = username.chars().all(char::is_alphanumeric);
     let log_creation = chrono::Utc::now().format("%Y-%m-%d %H:%M").to_string();
+
+    let log_creation_str = {
+        let id = "Log Creation: ";
+
+        let spaces = INFORMATION_SPACES - id.len();
+        format!("{}{}{}", id, " ".repeat(spaces), log_creation)
+    };
 
     let os_name = format!(
         "{}, {}",
@@ -163,37 +150,33 @@ Reports will be opened in your default text editor once completed.
         let spaces = INFORMATION_SPACES - id.len();
         format!("{}{}{}", id, " ".repeat(spaces), value)
     };
-    
-    let log_creation_str = {
-        let id = "Log Creation: ";
 
-        let spaces = INFORMATION_SPACES - id.len();
-        format!("{}{}{}", id, " ".repeat(spaces), log_creation)
-    };
+    file_handler.add_line(log_creation_str);
+
+    file_handler.add_line("".to_string());
     
-    http_handler.add_line(os_name_str.to_string());
-    http_handler.add_line(total_memory_str);
+    file_handler.add_line(os_name_str.to_string());
+    file_handler.add_line(total_memory_str);
     if total_swap > 0 {
-        http_handler.add_line(total_swap_str);
+        file_handler.add_line(total_swap_str);
     }
-    http_handler.add_line(total_memory_used_str);
+    file_handler.add_line(total_memory_used_str);
     if total_swap_used > 0 {
-        http_handler.add_line(total_swap_used_str);
+        file_handler.add_line(total_swap_used_str);
     }
-    http_handler.add_line(cpu);
-    http_handler.add_line(cpus);
+    file_handler.add_line(cpu);
+    file_handler.add_line(cpus);
     if !gpu.is_empty() {
-        http_handler.add_line(gpu);
+        file_handler.add_line(gpu);
     }
-    http_handler.add_line(alphanumeric_username);
-    http_handler.add_line(log_creation_str);
-    
-    http_handler.add_line("".to_string());
+    file_handler.add_line(alphanumeric_username);
+
+    file_handler.add_line("".to_string());
 
     let processes = datagatherers::processes::gather_processes(&sys);
     let installed_apps = datagatherers::installed::gather_installed();
 
-    http_handler.add_line(format!(
+    file_handler.add_line(format!(
         "Total Processes: {}",
         processes.iter().clone().map(|p| p.amount).sum::<u16>()
     ));
@@ -206,11 +189,11 @@ Reports will be opened in your default text editor once completed.
         + processes.iter().map(|p| p.name.len()).max().unwrap_or(0);
 
     for process in processes {
-        http_handler.add_line(process.to_string(MEMORY_SPACES, AMOUNT_SPACES, path_spaces));
+        file_handler.add_line(process.to_string(MEMORY_SPACES, AMOUNT_SPACES, path_spaces));
     }
 
-    http_handler.add_line("".to_string());
-    http_handler.add_line("Installed Apps:".to_string());
+    file_handler.add_line("".to_string());
+    file_handler.add_line("Installed Apps:".to_string());
 
     let name_spaces = installed_apps
         .iter()
@@ -229,26 +212,19 @@ Reports will be opened in your default text editor once completed.
         .unwrap_or(0);
 
     for app in installed_apps {
-        http_handler.add_line(app.to_string(name_spaces, version_spaces, author_spaces));
+        file_handler.add_line(app.to_string(name_spaces, version_spaces, author_spaces));
     }
 
     let hosts = datagatherers::hosts::gather_hosts();
 
     if !hosts.is_empty() {
-        http_handler.add_line("".to_string());
-        http_handler.add_line("Hosts:".to_string());
+        file_handler.add_line("".to_string());
+        file_handler.add_line("Hosts:".to_string());
 
         for host in hosts {
-            http_handler.add_line(host);
+            file_handler.add_line(host);
         }
     }
 
-    http_handler.submit();
-
-    wait_for_enter("exit")
-}
-
-fn wait_for_enter(message: &str) {
-    println!("Press enter to {}.", message);
-    let _ = stdin().read_line(&mut String::new());
+    file_handler.lines.join("\n")
 }

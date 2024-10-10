@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schema.tauri.app/config/2.0.0",
+  "productName": "ReportBook",
+  "version": "0.1.0",
+  "identifier": "dev.loudbook.reportbook",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../build"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "ReportBook",
+        "width": 1000,
+        "height": 800,
+        "resizable": false,
+        "maximizable": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon.ico",
+      "icons/icon.icns",
+      "icons/icon.png"
+    ]
+  }
+}
