@@ -1,9 +1,15 @@
 <div align="center">
-  <h1>ReportBook</h1>
-  <p></p>Simplistic automated diagnostic tool for Windows and macOS written in <a href="https://tauri.app/">Tauri</a> and <a href="https://www.rust-lang.org/">Rust</a></p>
-  
-  ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Loudbooks/ReportBook/build.yml?style=for-the-badge)
+  <div id="user-content-toc">
+    <ul align="center" style="list-style: none;">
+      <summary>
+        <h1>ReportBook</h1>
+      </summary>
+    </ul>
+  </div>
+  <p></p>Simplistic automated diagnostic tool for Windows and macOS written in <a href="https://tauri.app/">Tauri</a> and <a href="https://www.rust-lang.org/">Rust</a></p>  
 </div>
+
+------------
 
 ReportBook is a process used to diagnose a variety of possible issues on your device. You can find an example [here](https://pastebook.dev/pastes/millie-shadow-bard-milkchocolate?inspect).
 
