@@ -37,9 +37,9 @@ Your system username will be exempt from output.
 >
 > Select more info, and select run anyway.
 
-4. Type in your preferred username and select `Continue`.
-5. When the program has finished, select `Upload to PasteBook` at the bottom.
-6. Copy this link and give it to whoever requested the log.
+3. Type in your preferred username and select `Continue`.
+4. When the program has finished, select `Upload to PasteBook` at the bottom.
+5. Copy this link and give it to whoever requested the log.
 
 ### macOS
 1. Press `⌘ + Space`, type in `Terminal`, and press Enter. Copy and paste the following command into the terminal and press Enter. 
