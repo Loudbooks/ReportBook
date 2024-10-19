@@ -16,8 +16,8 @@
         "title": "ReportBook",
         "width": 1000,
         "height": 800,
-        "resizable": false,
-        "maximizable": false
+        "minWidth": 400,
+        "minHeight": 200
       }
     ],
     "security": {
