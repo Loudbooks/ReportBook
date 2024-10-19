@@ -187,6 +187,8 @@
       padding: 20px;
       border-radius: 15px;
       width: 385px;
+
+      margin-bottom: 20px;
     }
 
     h2 {
