@@ -9,7 +9,7 @@
 
     let uploadButton: HTMLButtonElement;
 
-    let url = "https://pastebook.dev/upload"
+    let url = "https://api.pastebook.dev/upload"
 
     let upload = false;
     let copy = false;
@@ -36,7 +36,7 @@
           }
         });
 
-        reportUrl = result.data;
+        reportUrl = `https://pastebook.dev/p/${result.data}`;
 
         uploadButton.innerText = reportUrl;
         copyToClipboard();
