@@ -9,7 +9,7 @@
 
     let uploadButton: HTMLButtonElement;
 
-    let url = "https://api.pastebook.dev/upload"
+    let url = "https://pastebook.dev/api/upload"
 
     let upload = false;
     let copy = false;
