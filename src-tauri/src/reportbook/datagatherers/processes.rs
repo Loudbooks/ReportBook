@@ -1,5 +1,5 @@
-use sysinfo::System;
 use crate::reportbook::process::Process;
+use sysinfo::System;
 
 pub fn gather_processes(sys: &System) -> Vec<Process> {
     let username = whoami::username();
@@ -9,7 +9,10 @@ pub fn gather_processes(sys: &System) -> Vec<Process> {
         match process.cwd() {
             None => {}
             Some(_) => {
-                let amount = if processes.iter().any(|p| p.name == process.name().to_str().unwrap()) {
+                let amount = if processes
+                    .iter()
+                    .any(|p| p.name == process.name().to_str().unwrap())
+                {
                     let new_process = processes
                         .iter_mut()
                         .find(|p| p.name == process.name().to_str().unwrap())

@@ -1,5 +1,5 @@
-pub mod reportbook;
 mod app;
+mod datagatherers;
 mod file_handler;
 mod process;
-mod datagatherers;
+pub mod reportbook;

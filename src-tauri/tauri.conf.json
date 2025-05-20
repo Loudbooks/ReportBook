@@ -27,10 +27,16 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": [
-      "icons/icon.ico",
-      "icons/icon.icns",
-      "icons/icon.png"
-    ]
+    "icon": ["icons/icon.ico", "icons/icon.icns", "icons/icon.png"],
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDg4QjdBQjc0RDFFMjIzQzYKUldUR0krTFJkS3UzaU5Tb3dzc2N0UWUweS9Fb1BMQTdYZGRhUWtNZmdxS1d5ZXhKT3ZmYVhxeGMK",
+      "active": true,
+      "endpoints": [
+        "https://api.github.com/repos/Loudbooks/reportbook/releases"
+      ]
+    }
   }
 }

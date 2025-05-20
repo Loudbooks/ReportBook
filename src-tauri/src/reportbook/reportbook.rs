@@ -1,11 +1,10 @@
+use crate::reportbook::process::prettify_memory;
+use crate::reportbook::{datagatherers, file_handler};
 use machine_info::Machine;
 use sysinfo::System;
-use crate::reportbook::{datagatherers, file_handler};
-use crate::reportbook::process::prettify_memory;
 
 pub fn collect_log() -> String {
-    let mut file_handler =
-        file_handler::FileHandler::new();
+    let mut file_handler = file_handler::FileHandler::new();
 
     let mut sys = System::new_all();
     sys.refresh_all();
@@ -154,7 +153,7 @@ pub fn collect_log() -> String {
     file_handler.add_line(log_creation_str);
 
     file_handler.add_line("".to_string());
-    
+
     file_handler.add_line(os_name_str.to_string());
     file_handler.add_line(total_memory_str);
     if total_swap > 0 {

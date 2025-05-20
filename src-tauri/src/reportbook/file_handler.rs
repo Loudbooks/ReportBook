@@ -4,9 +4,7 @@ pub struct FileHandler {
 
 impl FileHandler {
     pub fn new() -> Self {
-        Self {
-            lines: Vec::new(),
-        }
+        Self { lines: Vec::new() }
     }
 
     pub fn add_line(&mut self, line: String) {
