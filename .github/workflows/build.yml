@@ -23,18 +23,24 @@ jobs:
 
     - name: Run Tauri Build (MacOS x86_64)
       if: matrix.os == 'macos-latest'
+      env:
+        TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
       run: |
         rustup target add x86_64-apple-darwin
         pnpm tauri build --target x86_64-apple-darwin
 
     - name: Run Tauri Build (MacOS aarch64)
       if: matrix.os == 'macos-latest'
+      env:
+        TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
       run: |
         rustup target add aarch64-apple-darwin
         pnpm tauri build --target aarch64-apple-darwin
 
     - name: Run Tauri Build (Windows)
       if: matrix.os == 'windows-latest'
+      env:
+        TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
       run: pnpm tauri build
 
     - name: Upload Artifact (MacOS x86_64 Bundle)
