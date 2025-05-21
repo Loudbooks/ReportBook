@@ -25,6 +25,7 @@ jobs:
       if: matrix.os == 'macos-latest'
       env:
         TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
       run: |
         rustup target add x86_64-apple-darwin
         pnpm tauri build --target x86_64-apple-darwin
@@ -33,6 +34,7 @@ jobs:
       if: matrix.os == 'macos-latest'
       env:
         TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
       run: |
         rustup target add aarch64-apple-darwin
         pnpm tauri build --target aarch64-apple-darwin
@@ -41,6 +43,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       env:
         TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
       run: pnpm tauri build
 
     - name: Upload Artifact (MacOS x86_64 Bundle)
